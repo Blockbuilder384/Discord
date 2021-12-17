@@ -1,34 +1,98 @@
-# This is an example CHAT_INPUT or Slash Command, with a type of 1
-json = {
-    "name": "blep",
-    "type": 1,
-    "description": "Send a random adorable animal photo",
+import requests
+url = "https://discord.com/api/v8/applications/<my_application_id>/guilds/<guild_id>/commands"
+{
+    "name": "permissions",
+    "description": "Get or edit permissions for a user or a role",
     "options": [
         {
-            "name": "animal",
-            "description": "The type of animal",
-            "type": 3,
-            "required": True,
-            "choices": [
+            "name": "user",
+            "description": "Get or edit permissions for a user",
+            "type": 2, // 2 is type SUB_COMMAND_GROUP
+            "options": [
                 {
-                    "name": "Dog",
-                    "value": "animal_dog"
+                    "name": "get",
+                    "description": "Get permissions for a user",
+                    "type": 1, // 1 is type SUB_COMMAND
+                    "options": [
+                        {
+                            "name": "user",
+                            "description": "The user to get",
+                            "type": 6, // 6 is type USER
+                            "required": true
+                        },
+                        {
+                            "name": "channel",
+                            "description": "The channel permissions to get. If omitted, the guild permissions will be returned",
+                            "type": 7, // 7 is type CHANNEL
+                            "required": false
+                        }
+                    ]
                 },
                 {
-                    "name": "Cat",
-                    "value": "animal_cat"
-                },
-                {
-                    "name": "Penguin",
-                    "value": "animal_penguin"
+                    "name": "edit",
+                    "description": "Edit permissions for a user",
+                    "type": 1,
+                    "options": [
+                        {
+                            "name": "user",
+                            "description": "The user to edit",
+                            "type": 6,
+                            "required": true
+                        },
+                        {
+                            "name": "channel",
+                            "description": "The channel permissions to edit. If omitted, the guild permissions will be edited",
+                            "type": 7,
+                            "required": false
+                        }
+                    ]
                 }
             ]
         },
         {
-            "name": "only_smol",
-            "description": "Whether to show only baby animals",
-            "type": 5,
-            "required": False
+            "name": "role",
+            "description": "Get or edit permissions for a role",
+            "type": 2,
+            "options": [
+                {
+                    "name": "get",
+                    "description": "Get permissions for a role",
+                    "type": 1,
+                    "options": [
+                        {
+                            "name": "role",
+                            "description": "The role to get",
+                            "type": 8, // 8 is type ROLE
+                            "required": true
+                        },
+                        {
+                            "name": "channel",
+                            "description": "The channel permissions to get. If omitted, the guild permissions will be returned",
+                            "type": 7,
+                            "required": false
+                        }
+                    ]
+                },
+                {
+                    "name": "edit",
+                    "description": "Edit permissions for a role",
+                    "type": 1,
+                    "options": [
+                        {
+                            "name": "role",
+                            "description": "The role to edit",
+                            "type": 8,
+                            "required": true
+                        },
+                        {
+                            "name": "channel",
+                            "description": "The channel permissions to edit. If omitted, the guild permissions will be edited",
+                            "type": 7,
+                            "required": false
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
